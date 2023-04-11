@@ -33,7 +33,7 @@ all_books = []
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', all_books = all_books)
 
 
 @app.route("/add", methods=["POST", 'GET'])
@@ -46,6 +46,7 @@ def add():
             'rating': addForm.rating.data
         }
         all_books.append(form_data)
+        return redirect(url_for('home'))
         print(all_books)
     return render_template('add.html', form=addForm)
 
