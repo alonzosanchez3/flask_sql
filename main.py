@@ -3,6 +3,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap5
+import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 
 class MyForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
@@ -23,10 +25,29 @@ pip3 install -r requirements.txt
 
 This will install the packages from requirements.txt for this project.
 '''
-
+db = SQLAlchemy()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///books.db"
+db.init_app(app)
 bootstrap = Bootstrap5(app)
+
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(250), unique=True, nullable=False)
+    author = db.Column(db.String(250), unique=False, nullable=False)
+    rating = db.Column(db.Float, unique=False, nullable=False)
+
+with app.app_context():
+    db.create_all()
+
+# with app.app_context():
+#     new_book = Book(title="Goosebumps", author="R.L. Stein", rating=9.5)
+#     db.session.add(new_book)
+#     db.session.commit()
+
+
+
 
 all_books = []
 
