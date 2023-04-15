@@ -12,6 +12,10 @@ class MyForm(FlaskForm):
     rating = DecimalField('Rating', places=1, validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class EditForm(FlaskForm):
+    new_rating = DecimalField('New Rating', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
 db = SQLAlchemy()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -55,6 +59,12 @@ def add():
             db.session.commit()
         return redirect(url_for('home'))
     return render_template('add.html', form=addForm)
+
+@app.route('/edit', methods=['POST', 'GET'])
+def edit(id):
+    edit_form = EditForm()
+    if edit_form.validate_on_submit():
+        book_id = request.form['id']
 
 
 if __name__ == "__main__":
