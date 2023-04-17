@@ -29,17 +29,6 @@ class Book(db.Model):
     author = db.Column(db.String(250), unique=False, nullable=False)
     rating = db.Column(db.Float, unique=False, nullable=False)
 
-# with app.app_context():
-#     db.create_all()
-
-# with app.app_context():
-#     new_book = Book(title="Goosebumps", author="R.L. Stein", rating=9.5)
-#     db.session.add(new_book)
-#     db.session.commit()
-
-
-
-
 all_books = []
 
 
