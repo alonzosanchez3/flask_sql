@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap5
 
@@ -8,6 +8,7 @@ class MyForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
     rating = StringField('Rating', validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
 
 '''
@@ -35,10 +36,17 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/add")
+@app.route("/add", methods=["POST", 'GET'])
 def add():
     addForm = MyForm()
-
+    if addForm.validate_on_submit():
+        form_data = {
+            "title": addForm.title.data,
+            "author": addForm.author.data,
+            'rating': addForm.rating.data
+        }
+        all_books.append(form_data)
+        print(all_books)
     return render_template('add.html', form=addForm)
 
 
