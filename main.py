@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 '''
-Red underlines? Install the required packages first: 
-Open the Terminal in PyCharm (bottom left). 
+Red underlines? Install the required packages first:
+Open the Terminal in PyCharm (bottom left).
 
 On Windows type:
 python -m pip install -r requirements.txt
@@ -20,14 +20,14 @@ all_books = []
 
 @app.route('/')
 def home():
-    pass
+    return render_template('index.html')
 
 
 @app.route("/add")
 def add():
-    pass
+    return render_template('add.html')
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=9000)
 
